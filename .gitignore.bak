@@ -1,0 +1,24 @@
+# ===== Android / Gradle =====
+.gradle/
+build/
+*/build/
+
+# ===== Android Studio / IntelliJ =====
+.idea/
+*.iml
+
+# ===== Local config =====
+local.properties
+
+# ===== Keystore / secrets =====
+*.jks
+*.keystore
+key.properties
+
+# ===== Firebase =====
+google-services.json
+
+# ===== Logs / OS =====
+*.log
+.DS_Store
+Thumbs.db
