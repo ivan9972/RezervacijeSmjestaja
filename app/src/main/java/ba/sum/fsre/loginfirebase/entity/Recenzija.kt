@@ -1,10 +1,6 @@
 package ba.sum.fsre.loginfirebase.entity
 
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.Index
-import androidx.room.PrimaryKey
-import ba.sum.fsre.loginfirebase.entity.Smjestaj
+import androidx.room.*
 
 @Entity(
     tableName = "recenzije",
@@ -13,13 +9,13 @@ import ba.sum.fsre.loginfirebase.entity.Smjestaj
             entity = Korisnik::class,
             parentColumns = ["id"],
             childColumns = ["korisnikId"],
-            onDelete = ForeignKey.Companion.CASCADE
+            onDelete = ForeignKey.CASCADE
         ),
         ForeignKey(
             entity = Smjestaj::class,
             parentColumns = ["id"],
             childColumns = ["smjestajId"],
-            onDelete = ForeignKey.Companion.CASCADE
+            onDelete = ForeignKey.CASCADE
         )
     ],
     indices = [Index("korisnikId"), Index("smjestajId")]

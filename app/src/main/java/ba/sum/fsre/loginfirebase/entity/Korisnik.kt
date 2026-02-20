@@ -10,7 +10,7 @@ data class Korisnik(
     val ime: String,
     val prezime: String,
     val email: String,
-    val lozinka: String,
     val telefon: String?,
-    val datumKreiranja: Long
+    val datumKreiranja: Long,
+    val firebaseUid: String
 )
