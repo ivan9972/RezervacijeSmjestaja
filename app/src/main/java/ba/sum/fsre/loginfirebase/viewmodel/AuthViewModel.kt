@@ -8,7 +8,7 @@ import ba.sum.fsre.loginfirebase.entity.Korisnik
 import ba.sum.fsre.loginfirebase.repository.RepositoryProvider
 import kotlinx.coroutines.launch
 
-class LoginViewModel(app: Application) : AndroidViewModel(app) {
+class AuthViewModel(app: Application) : AndroidViewModel(app) {
 
     private val repo = RepositoryProvider.auth(app.applicationContext)
 
@@ -24,8 +24,8 @@ class LoginViewModel(app: Application) : AndroidViewModel(app) {
             val res = repo.login(email, password)
             loading.value = false
 
-            if (res.success) korisnik.value = res.korisnik
-            else error.value = res.message
+            if (res.success && res.korisnik != null) korisnik.value = res.korisnik
+            else error.value = res.message ?: "Greška: korisnik nije učitan."
         }
     }
 
@@ -37,8 +37,8 @@ class LoginViewModel(app: Application) : AndroidViewModel(app) {
             val res = repo.register(ime, prezime, email, telefon, password)
             loading.value = false
 
-            if (res.success) korisnik.value = res.korisnik
-            else error.value = res.message
+            if (res.success && res.korisnik != null) korisnik.value = res.korisnik
+            else error.value = res.message ?: "Greška: korisnik nije spremljen."
         }
     }
 

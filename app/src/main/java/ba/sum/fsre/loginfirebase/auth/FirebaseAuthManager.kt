@@ -12,14 +12,14 @@ class FirebaseAuthManager {
     fun login(
         email: String,
         password: String,
-        onResult: (Boolean, String?) -> Unit
+        onResult: (success: Boolean, message: String?, uid: String?) -> Unit
     ) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
-                    onResult(true, null)
+                    onResult(true, null, auth.currentUser?.uid)
                 } else {
-                    onResult(false, it.exception?.message)
+                    onResult(false, it.exception?.message, null)
                 }
             }
     }
@@ -27,14 +27,14 @@ class FirebaseAuthManager {
     fun register(
         email: String,
         password: String,
-        onResult: (Boolean, String?) -> Unit
+        onResult: (success: Boolean, message: String?, uid: String?) -> Unit
     ) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
-                    onResult(true, null)
+                    onResult(true, null, auth.currentUser?.uid)
                 } else {
-                    onResult(false, it.exception?.message)
+                    onResult(false, it.exception?.message, null)
                 }
             }
     }

@@ -1,6 +1,9 @@
 package ba.sum.fsre.loginfirebase.entity
 
-import androidx.room.*
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.Index
+import androidx.room.PrimaryKey
 
 @Entity(
     tableName = "recenzije",
@@ -18,7 +21,11 @@ import androidx.room.*
             onDelete = ForeignKey.CASCADE
         )
     ],
-    indices = [Index("korisnikId"), Index("smjestajId")]
+    indices = [
+        Index("korisnikId"),
+        Index("smjestajId"),
+        Index(value = ["korisnikId", "smjestajId"], unique = true)
+    ]
 )
 data class Recenzija(
     @PrimaryKey(autoGenerate = true)
@@ -27,5 +34,5 @@ data class Recenzija(
     val smjestajId: Int,
     val ocjena: Int,
     val komentar: String,
-    val datumKreiranja: Long
+    val datumKreiranja: Long = System.currentTimeMillis()
 )

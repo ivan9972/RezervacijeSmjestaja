@@ -1,9 +1,22 @@
 package ba.sum.fsre.loginfirebase.entity
 
 import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "smjestaji")
+@Entity(
+    tableName = "smjestaji",
+    foreignKeys = [
+        ForeignKey(
+            entity = Korisnik::class,
+            parentColumns = ["id"],
+            childColumns = ["vlasnikId"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ],
+    indices = [Index("vlasnikId")]
+)
 data class Smjestaj(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,

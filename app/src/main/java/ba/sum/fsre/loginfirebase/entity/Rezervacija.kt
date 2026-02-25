@@ -1,6 +1,9 @@
 package ba.sum.fsre.loginfirebase.entity
 
-import androidx.room.*
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.Index
+import androidx.room.PrimaryKey
 
 @Entity(
     tableName = "rezervacije",
@@ -28,5 +31,6 @@ data class Rezervacija(
     val datumDolaska: Long,
     val datumOdlaska: Long,
     val ukupnaCijena: Double,
-    val status: String
+
+    val status: String = "CONFIRMED"
 )
