@@ -28,7 +28,6 @@ class BookingRepository(private val db: AppDatabase) {
         ukupnaCijena: Double,
         nacinPlacanja: String
     ): Result<Int> {
-
         if (datumDolaska >= datumOdlaska) return Result(false, "Datum dolaska mora biti prije datuma odlaska.")
         if (ukupnaCijena <= 0.0) return Result(false, "Ukupna cijena nije ispravna.")
 
@@ -67,33 +66,38 @@ class BookingRepository(private val db: AppDatabase) {
         }
     }
 
-    suspend fun userReservations(korisnikId: Int): Result<List<Rezervacija>> {
-        return try {
-            Result(true, data = db.rezervacijaDao().findByKorisnik(korisnikId))
-        } catch (e: Exception) {
-            Result(false, e.message ?: "Greška kod učitavanja rezervacija.")
-        }
-    }
+    suspend fun userReservations(korisnikId: Int): Result<List<Rezervacija>> =
+        try { Result(true, data = db.rezervacijaDao().findByKorisnik(korisnikId)) }
+        catch (e: Exception) { Result(false, e.message ?: "Greška kod učitavanja rezervacija.") }
+
+    suspend fun allReservationsNonAdmin(): Result<List<Rezervacija>> =
+        try { Result(true, data = db.rezervacijaDao().findAllNonAdmin()) }
+        catch (e: Exception) { Result(false, e.message ?: "Greška kod učitavanja rezervacija.") }
 
 
-    suspend fun cancelReservation(rezervacijaId: Int, korisnikId: Int): Result<Unit> {
+    suspend fun cancelReservationUser(rezervacijaId: Int, korisnikId: Int): Result<Unit> {
         return try {
+            val rez = db.rezervacijaDao().findById(rezervacijaId)
+                ?: return Result(false, "Rezervacija ne postoji.")
+
+            if (rez.korisnikId != korisnikId) return Result(false, "Ne možeš otkazati tuđu rezervaciju.")
+            if (rez.status.equals("CANCELLED", ignoreCase = true)) return Result(false, "Rezervacija je već otkazana.")
+
             val updated = db.rezervacijaDao().cancelByIdAndUser(rezervacijaId, korisnikId)
-            if (updated == 0) Result(false, "Ne možeš otkazati tuđu rezervaciju.")
-            else Result(true)
+            if (updated == 0) Result(false, "Otkazivanje nije uspjelo.") else Result(true)
         } catch (e: Exception) {
             Result(false, e.message ?: "Greška kod otkazivanja.")
         }
     }
 
 
-    suspend fun deleteCancelledReservation(rezervacijaId: Int, korisnikId: Int): Result<Unit> {
+    suspend fun cancelReservationAdmin(rezervacijaId: Int): Result<Unit> {
         return try {
-            val deleted = db.rezervacijaDao().deleteCancelledByIdAndUser(rezervacijaId, korisnikId)
-            if (deleted == 0) Result(false, "Možeš obrisati samo svoju otkazanu rezervaciju.")
+            val deleted = db.rezervacijaDao().deleteByIdAdmin(rezervacijaId)
+            if (deleted == 0) Result(false, "Rezervacija ne postoji.")
             else Result(true)
         } catch (e: Exception) {
-            Result(false, e.message ?: "Greška kod brisanja.")
+            Result(false, e.message ?: "Greška kod admin brisanja.")
         }
     }
 }

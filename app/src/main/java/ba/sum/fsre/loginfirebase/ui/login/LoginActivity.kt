@@ -45,13 +45,32 @@ class LoginActivity : AppCompatActivity() {
             if (!msg.isNullOrBlank()) Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
         }
 
-
         vm.korisnik.observe(this) { korisnik ->
             if (korisnik != null) {
-                val i = Intent(this, WelcomeActivity::class.java)
-                i.putExtra("KORISNIK_ID", korisnik.id)
-                startActivity(i)
-                finish()
+
+                val role = korisnik.role // ✅ role iz baze
+
+                val fullName = listOf(korisnik.ime, korisnik.prezime)
+                    .filter { it.isNotBlank() }
+                    .joinToString(" ")
+                    .ifBlank { "Korisniče" }
+
+                if (role == "ADMIN") {
+                    val i = Intent(this, AdminPanelActivity::class.java)
+                    i.putExtra("KORISNIK_ID", korisnik.id)
+                    i.putExtra("ROLE", role)
+                    i.putExtra("FULL_NAME", fullName)
+                    i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(i)
+                    finish()
+                } else {
+                    val i = Intent(this, WelcomeActivity::class.java)
+                    i.putExtra("KORISNIK_ID", korisnik.id)
+                    i.putExtra("ROLE", role)
+                    i.putExtra("FULL_NAME", fullName)
+                    startActivity(i)
+                    finish()
+                }
             }
         }
     }

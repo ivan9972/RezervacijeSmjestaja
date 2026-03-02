@@ -34,6 +34,10 @@ class SmjestajDetailsActivity : AppCompatActivity() {
     private var smjestajId = -1
     private var selectedRoom: Soba? = null
 
+
+    private var role: String = "USER"
+    private var fullName: String = "Korisnik"
+
     private val fmt = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
     private var fromMillis: Long? = null
     private var toMillis: Long? = null
@@ -45,6 +49,8 @@ class SmjestajDetailsActivity : AppCompatActivity() {
 
         korisnikId = intent.getIntExtra("KORISNIK_ID", -1)
         smjestajId = intent.getIntExtra("SMJESTAJ_ID", -1)
+        role = intent.getStringExtra("ROLE") ?: "USER"
+        fullName = intent.getStringExtra("FULL_NAME") ?: "Korisnik"
 
         if (korisnikId <= 0 || smjestajId <= 0) {
             Toast.makeText(this, "Nedostaju podaci.", Toast.LENGTH_LONG).show()
@@ -54,26 +60,37 @@ class SmjestajDetailsActivity : AppCompatActivity() {
 
         b.btnBack.setOnClickListener { finish() }
 
-
         lockEditTextForPicker(b.etFrom)
         lockEditTextForPicker(b.etTo)
 
+
         b.etFrom.setOnClickListener {
-            pickDate { millis, text ->
+            val min = todayAtMidnight()
+            pickDate(minMillis = min) { millis, text ->
                 fromMillis = millis
                 b.etFrom.setText(text)
+
+                // ako je To već izabrano, a sad je neispravno -> reset
+                val to = toMillis
+                if (to != null && millis >= to) {
+                    toMillis = null
+                    b.etTo.setText("")
+                    Toast.makeText(this, "Odlazak mora biti nakon dolaska. Odaberi odlazak ponovo.", Toast.LENGTH_SHORT).show()
+                }
+
                 recalcTotal()
             }
         }
 
+
         b.etTo.setOnClickListener {
-            pickDate { millis, text ->
+            val min = (fromMillis?.let { it + TimeUnit.DAYS.toMillis(1) }) ?: todayAtMidnight()
+            pickDate(minMillis = min) { millis, text ->
                 toMillis = millis
                 b.etTo.setText(text)
                 recalcTotal()
             }
         }
-
 
         b.spPayment.adapter = ArrayAdapter(
             this,
@@ -122,6 +139,8 @@ class SmjestajDetailsActivity : AppCompatActivity() {
                         Toast.makeText(this, "Rezervacija uspješna!", Toast.LENGTH_SHORT).show()
                         val i = Intent(this, MyReservationsActivity::class.java)
                         i.putExtra("KORISNIK_ID", korisnikId)
+                        i.putExtra("ROLE", role)
+                        i.putExtra("FULL_NAME", fullName)
                         startActivity(i)
                         finish()
                     }
@@ -154,7 +173,16 @@ class SmjestajDetailsActivity : AppCompatActivity() {
         et.isFocusableInTouchMode = false
     }
 
-    private fun pickDate(onPicked: (millis: Long, display: String) -> Unit) {
+    private fun todayAtMidnight(): Long {
+        val c = Calendar.getInstance()
+        c.set(Calendar.HOUR_OF_DAY, 0)
+        c.set(Calendar.MINUTE, 0)
+        c.set(Calendar.SECOND, 0)
+        c.set(Calendar.MILLISECOND, 0)
+        return c.timeInMillis
+    }
+
+    private fun pickDate(minMillis: Long, onPicked: (millis: Long, display: String) -> Unit) {
         val now = Calendar.getInstance()
 
         DatePickerDialog(
@@ -173,7 +201,9 @@ class SmjestajDetailsActivity : AppCompatActivity() {
             now.get(Calendar.YEAR),
             now.get(Calendar.MONTH),
             now.get(Calendar.DAY_OF_MONTH)
-        ).show()
+        ).apply {
+            datePicker.minDate = minMillis
+        }.show()
     }
 
     private fun readDatesOrShowError(): Pair<Long, Long>? {
@@ -228,7 +258,6 @@ class SmjestajDetailsActivity : AppCompatActivity() {
 
             val sobaDao = db.sobaDao()
             val rooms = withContext(Dispatchers.IO) { sobaDao.findBySmjestaj(smjestajId) }
-
 
             if (rooms.isEmpty()) {
                 withContext(Dispatchers.IO) {

@@ -2,56 +2,122 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5">
+    android:fillViewport="true"
+    android:background="#F3EFFB">
 
     <LinearLayout
-        android:padding="32dp"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="Prijava"
-            android:textSize="28sp"
             android:textStyle="bold"
-            android:layout_marginBottom="24dp"
+            android:textSize="28sp"
+            android:textColor="#2E2442" />
+
+        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Unesi podatke za pristup aplikaciji"
+            android:textSize="13sp"
+            android:textColor="#6A6478" />
 
-        <EditText
-            android:id="@+id/etEmail"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <EditText
-            android:id="@+id/etPassword"
-            android:hint="Lozinka"
-            android:inputType="textPassword"
-            android:layout_marginTop="12dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <ProgressBar
-            android:id="@+id/progress"
-            android:visibility="gone"
-            android:layout_marginTop="14dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <Button
-            android:id="@+id/btnLogin"
-            android:text="Prijavi se"
+            android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:orientation="vertical"
+            android:padding="18dp"
+            android:background="#FFFFFF"
+            android:elevation="6dp">
 
-        <Button
-            android:id="@+id/btnGoRegister"
-            android:text="Nemaš račun? Registracija"
-            android:layout_marginTop="10dp"
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:textSize="12sp"
+                android:textColor="#6A6478"
+                android:layout_marginBottom="6dp" />
+
+
+            <EditText
+                android:id="@+id/etEmail"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:inputType="textEmailAddress"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp"
+                android:backgroundTint="#6B4EA0"
+                android:textColor="#1F1B2A"
+                android:textSize="15sp" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lozinka"
+                android:textSize="12sp"
+                android:textColor="#6A6478"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="6dp" />
+
+
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:inputType="textPassword"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp"
+                android:backgroundTint="#6B4EA0"
+                android:textColor="#1F1B2A"
+                android:textSize="15sp" />
+
+
+            <ProgressBar
+                android:id="@+id/progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:layout_gravity="center_horizontal"
+                android:visibility="gone" />
+
+
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="18dp"
+                android:text="Prijavi se"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#6B4EA0" />
+
+
+            <Button
+                android:id="@+id/btnGoRegister"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:text="Nemaš račun? Registracija"
+                android:textAllCaps="false"
+                android:textColor="#6B4EA0"
+                android:backgroundTint="#EEE6FF" />
+
+        </LinearLayout>
+
+
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="24dp" />
+
     </LinearLayout>
 </ScrollView>

@@ -18,7 +18,7 @@ interface SobaDao {
     @Query("SELECT * FROM sobe WHERE id = :id")
     suspend fun findById(id: Int): Soba?
 
-    // ✅ dostupne sobe
+
     @Query("""
         SELECT * FROM sobe
         WHERE smjestajId = :smjestajId
@@ -35,7 +35,6 @@ interface SobaDao {
         datumOdlaska: Long
     ): List<Soba>
 
-    // ✅ za seed provjeru
     @Query("SELECT COUNT(*) FROM sobe")
     suspend fun countAll(): Int
 }

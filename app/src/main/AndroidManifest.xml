@@ -5,38 +5,39 @@
         android:label="Rezervacije"
         android:supportsRtl="true"
         android:theme="@style/Theme.Material3.DayNight.NoActionBar">
-
+        <activity
+            android:name=".ui.login.AdminReservationsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.login.AdminUsersActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.login.AdminPanelActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.login.WelcomeActivity"
             android:exported="false" />
-
         <activity
             android:name=".ui.login.MyReservationsActivity"
             android:exported="false" />
-
         <activity
             android:name=".ui.login.SmjestajDetailsActivity"
             android:exported="false" />
-
         <activity
             android:name=".ui.login.HomeActivity"
             android:exported="false" />
-
         <activity
             android:name=".ui.login.RegisterActivity"
             android:exported="false" />
-
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
     </application>
 
 </manifest>

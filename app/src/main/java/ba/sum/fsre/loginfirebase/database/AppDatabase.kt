@@ -24,7 +24,7 @@ import ba.sum.fsre.loginfirebase.entity.Soba
         Placanje::class,
         Recenzija::class
     ],
-    version = 1,
+    version = 6,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {

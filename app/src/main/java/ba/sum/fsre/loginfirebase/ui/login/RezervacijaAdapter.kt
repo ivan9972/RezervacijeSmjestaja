@@ -2,6 +2,8 @@ package ba.sum.fsre.loginfirebase.ui.login
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ba.sum.fsre.loginfirebase.databinding.ItemRezervacijaBinding
 import ba.sum.fsre.loginfirebase.entity.Rezervacija
@@ -10,20 +12,11 @@ import java.util.Date
 import java.util.Locale
 
 class RezervacijaAdapter(
-    private val onCancel: (Rezervacija) -> Unit,
-    private val onDelete: (Rezervacija) -> Unit
-) : RecyclerView.Adapter<RezervacijaAdapter.VH>() {
+    private val isAdmin: Boolean,
+    private val onAction: (Rezervacija) -> Unit
+) : ListAdapter<Rezervacija, RezervacijaAdapter.VH>(DIFF) {
 
-    private val items = mutableListOf<Rezervacija>()
-    private val fmt = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
-
-    fun submit(list: List<Rezervacija>) {
-        items.clear()
-        items.addAll(list)
-        notifyDataSetChanged()
-    }
-
-    inner class VH(val b: ItemRezervacijaBinding) : RecyclerView.ViewHolder(b.root)
+    class VH(val b: ItemRezervacijaBinding) : RecyclerView.ViewHolder(b.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         val b = ItemRezervacijaBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -31,22 +24,35 @@ class RezervacijaAdapter(
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {
-        val r = items[position]
+        val r = getItem(position)
 
-        holder.b.tvTitle.text = "Rezervacija #${r.id} • SobaId: ${r.sobaId}"
-        holder.b.tvDates.text = "${fmt.format(Date(r.datumDolaska))} — ${fmt.format(Date(r.datumOdlaska))}"
-        holder.b.tvPrice.text = "%.2f €".format(r.ukupnaCijena)
+        val df = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+        holder.b.tvTitle.text = "Rezervacija #${r.id} • Soba ${r.sobaId}"
+        holder.b.tvDates.text = "${df.format(Date(r.datumDolaska))} – ${df.format(Date(r.datumOdlaska))}"
+        holder.b.tvPrice.text = String.format(Locale.getDefault(), "%.2f €", r.ukupnaCijena)
         holder.b.tvStatus.text = r.status
 
         val isCancelled = r.status.equals("CANCELLED", ignoreCase = true)
 
-        holder.b.btnCancel.isEnabled = !isCancelled
-        holder.b.btnCancel.text = if (isCancelled) "Otkazano" else "Otkaži rezervaciju"
-        holder.b.btnCancel.setOnClickListener { onCancel(r) }
+        if (isAdmin) {
+            holder.b.btnAction.text = "Otkaži (obriši)"
+            holder.b.btnAction.isEnabled = true
+            holder.b.btnAction.alpha = 1f
+            holder.b.btnAction.setOnClickListener { onAction(r) }
+        } else {
 
-        holder.b.btnDelete.isEnabled = isCancelled
-        holder.b.btnDelete.setOnClickListener { onDelete(r) }
+            val canCancel = !isCancelled
+            holder.b.btnAction.isEnabled = canCancel
+            holder.b.btnAction.alpha = if (canCancel) 1f else 0.4f
+            holder.b.btnAction.text = if (isCancelled) "Otkazano" else "Otkaži rezervaciju"
+            holder.b.btnAction.setOnClickListener { if (canCancel) onAction(r) }
+        }
     }
 
-    override fun getItemCount(): Int = items.size
+    companion object {
+        private val DIFF = object : DiffUtil.ItemCallback<Rezervacija>() {
+            override fun areItemsTheSame(oldItem: Rezervacija, newItem: Rezervacija) = oldItem.id == newItem.id
+            override fun areContentsTheSame(oldItem: Rezervacija, newItem: Rezervacija) = oldItem == newItem
+        }
+    }
 }

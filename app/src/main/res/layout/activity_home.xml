@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- HEADER -->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,45 +24,55 @@
             android:text="Moje"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-    </LinearLayout>
-
-    <!-- FILTER BAR -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
-
-        <EditText
-            android:id="@+id/etGradFilter"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Pretraži po gradu (npr. Split)"
-            android:inputType="text"
-            android:maxLines="1"/>
 
         <Button
-            android:id="@+id/btnSearch"
+            android:id="@+id/btnBack"
+            android:text="Natrag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/etCityFilter"
+            android:hint="Grad (npr. Split)"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btnFilter"
+            android:text="Traži"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Traži"
             android:layout_marginStart="8dp"/>
 
         <Button
-            android:id="@+id/btnReset"
+            android:id="@+id/btnClearFilter"
+            android:text="X"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Reset"
-            android:layout_marginStart="6dp"/>
+            android:layout_marginStart="8dp"/>
     </LinearLayout>
 
-    <!-- LISTA -->
+    <TextView
+        android:id="@+id/tvFilterInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text=""
+        android:textSize="12sp" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSmjestaji"
         android:layout_marginTop="12dp"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_height="match_parent"/>
 </LinearLayout>

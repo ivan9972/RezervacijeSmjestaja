@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ADMIN PANEL"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:paddingBottom="14dp" />
+
+    <Button
+        android:id="@+id/btnUsers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Korisnici" />
+
+    <Button
+        android:id="@+id/btnReservations"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Rezervacije"
+        android:layout_marginTop="10dp" />
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        android:layout_marginTop="10dp" />
+
+</LinearLayout>

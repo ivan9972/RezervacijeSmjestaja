@@ -1,44 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WelcomeActivity">
+    android:fillViewport="true"
+    android:background="#F3EFFB">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="24dp">
+        android:padding="22dp">
 
         <TextView
-            android:id="@+id/text_welcome"
+            android:id="@+id/tvWelcome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Welcome, "
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            android:text="Dobrodošli"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#2E2442" />
 
         <TextView
-            android:text="Registrirani profili:"
-            android:layout_marginTop="12dp"
-            android:textStyle="bold"
+            android:id="@+id/tvSub"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Odaberi smještaj, provjeri dostupnost i upravljaj rezervacijama na jednom mjestu."
+            android:textSize="14sp"
+            android:textColor="#6A5B7A" />
 
-        <ListView
-            android:id="@+id/list_profiles"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:backgroundTint="#FFFFFF"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="6dp"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Brzi pregled"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:textColor="#2E2442" />
+
+                <TextView
+                    android:id="@+id/tvInfo1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="• Pretražuj po gradu i nazivu smještaja"
+                    android:textColor="#4A3D5E"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tvInfo2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="• Odaberi datume boravka i sobu"
+                    android:textColor="#4A3D5E"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tvInfo3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="• Otkaži rezervaciju jednim klikom"
+                    android:textColor="#4A3D5E"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:backgroundTint="#FFFFFF"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="6dp"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rezervacije"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:textColor="#2E2442" />
+
+                <TextView
+                    android:id="@+id/tvReservationsCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Ukupno rezervacija: 0"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="#6B4EA0" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
         <Button
-            android:id="@+id/button_logout"
+            android:id="@+id/btnContinue"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_marginTop="18dp"
+            android:text="Nastavi"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#6B4EA0" />
+
+        <Button
+            android:id="@+id/btnMyReservations"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_marginTop="10dp"
+            android:text="Moje rezervacije"
+            android:textAllCaps="false"
+            android:textColor="#6B4EA0"
+            android:backgroundTint="#EEE6FF" />
+
+        <Button
+            android:id="@+id/btnLogout"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_marginTop="10dp"
+            android:text="Logout"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#8F2D56" />
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Logout" />
+            android:layout_marginTop="14dp"
+            android:text="Savjet: Ako ne vidiš sobu kao dostupnu, promijeni datume i ponovno klikni “Prikaži dostupne sobe”."
+            android:textSize="12sp"
+            android:textColor="#6A5B7A" />
+
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

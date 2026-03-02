@@ -19,5 +19,11 @@ data class Korisnik(
     val email: String,
     val telefon: String? = null,
     val datumKreiranja: Long = System.currentTimeMillis(),
-    val firebaseUid: String
+    val firebaseUid: String,
+
+
+    val role: String = "USER",
+
+
+    val aktivan: Boolean = true
 )

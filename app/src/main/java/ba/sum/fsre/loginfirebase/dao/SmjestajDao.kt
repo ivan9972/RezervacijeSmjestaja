@@ -24,7 +24,7 @@ interface SmjestajDao {
     @Query("SELECT * FROM smjestaji WHERE grad LIKE '%' || :grad || '%'")
     suspend fun searchByGrad(grad: String): List<Smjestaj>
 
-    // ✅ za seed provjeru
+
     @Query("SELECT COUNT(*) FROM smjestaji")
     suspend fun countAll(): Int
 }
